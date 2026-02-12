@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Teacher — Mayurbhanj Initiative</title>
+  <meta name="description" content="Select a teacher profile to begin your learning session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="choose-teacher.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>🏛️</text></svg>">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="navbar-logo">
+        <img src="assets/odisha-emblem.png" alt="Odisha Government Emblem">
+      </div>
+      <div class="navbar-title">
+        <span class="navbar-title-main">Medhavi Mayurbhanj</span>
+        <span class="navbar-title-sub">Department of Education, Mayurbhanj</span>
+      </div>
+    </div>
+
+    <div class="navbar-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="od">ଓଡ଼ିଆ</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="teacher-hero">
+    <div class="teacher-hero-content">
+      <div class="teacher-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Select Profile
+      </div>
+      <h1 class="teacher-heading">Choose Your Teacher</h1>
+      <p class="teacher-subtitle">Pick the profile for today's session and dive into an interactive learning experience.</p>
+    </div>
+  </section>
+
+  <!-- ===== TEACHER GRID ===== -->
+  <main class="teacher-content">
+    <div class="teacher-grid">
+
+      <div class="teacher-card" tabindex="0" data-teacher="Ayush Sharma">
+        <div class="teacher-avatar" data-initials="AS">AS</div>
+        <h3 class="teacher-name">Ayush Sharma</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+      <div class="teacher-card" tabindex="0" data-teacher="Shubhendra Kushwaha">
+        <div class="teacher-avatar" data-initials="SK">SK</div>
+        <h3 class="teacher-name">Shubhendra Kush...</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+      <div class="teacher-card" tabindex="0" data-teacher="Ankit Raj">
+        <div class="teacher-avatar" data-initials="AR">AR</div>
+        <h3 class="teacher-name">Ankit Raj</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+      <div class="teacher-card" tabindex="0" data-teacher="Teacher 4">
+        <div class="teacher-avatar" data-initials="T4">T4</div>
+        <h3 class="teacher-name">Teacher 4</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+      <div class="teacher-card" tabindex="0" data-teacher="Teacher 5">
+        <div class="teacher-avatar" data-initials="T5">T5</div>
+        <h3 class="teacher-name">Teacher 5</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+      <div class="teacher-card" tabindex="0" data-teacher="Teacher 6">
+        <div class="teacher-avatar" data-initials="T6">T6</div>
+        <h3 class="teacher-name">Teacher 6</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+      <div class="teacher-card" tabindex="0" data-teacher="Sushant Mahapatra">
+        <div class="teacher-avatar" data-initials="SM">SM</div>
+        <h3 class="teacher-name">Sushant Mahapatra</h3>
+        <p class="teacher-status">Ready to teach</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p class="footer-text">&copy; 2026 Mayurbhanj Initiative — Odisha School Education Programme Authority. All rights reserved.</p>
+  </footer>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    // Language toggle
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Get course name from URL or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseName = urlParams.get('course') || localStorage.getItem('courseName') || '';
+
+    // Teacher card click
+    document.querySelectorAll('.teacher-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // Remove selected from all
+        document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('selected'));
+        // Select this one
+        card.classList.add('selected');
+
+        const teacherName = card.dataset.teacher;
+        localStorage.setItem('teacherName', teacherName);
+        // Navigate to course content after brief delay
+        setTimeout(() => {
+          let url = 'course-content.html?teacher=' + encodeURIComponent(teacherName);
+          if (courseName) url += '&course=' + encodeURIComponent(courseName);
+          window.location.href = url;
+        }, 300);
+      });
+    });
+
+    // Animate cards on load
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -20px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.teacher-card').forEach(card => {
+      card.style.animationPlayState = 'paused';
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>

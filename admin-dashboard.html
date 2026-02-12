@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Mayurbhanj Initiative</title>
+  <meta name="description" content="Admin dashboard for managing categories, courses, and reports.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-dashboard.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>🏛️</text></svg>">
+</head>
+<body>
+
+  <div class="admin-layout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="admin-sidebar">
+      <!-- Sidebar Header -->
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Flag_of_Odisha.svg/960px-Flag_of_Odisha.svg.png" alt="Odisha Logo" style="width:100%;height:100%;object-fit:contain;">
+        </div>
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-name">Mayurbhanj</span>
+          <span class="sidebar-brand-sub">Admin Portal</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <p class="sidebar-nav-label">CONTENT MANAGEMENT</p>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="#" class="sidebar-nav-item active" data-section="categories">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="3" y="3" width="8" height="8" rx="2"/>
+                <rect x="13" y="3" width="8" height="8" rx="2"/>
+                <rect x="3" y="13" width="8" height="8" rx="2"/>
+                <rect x="13" y="13" width="8" height="8" rx="2"/>
+              </svg>
+              <span>Categories</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="sidebar-nav-item" data-section="courses">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+              <span>Courses</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="sidebar-nav-item" data-section="reports">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <span>Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="sidebar-nav-item" data-section="teachers">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Teachers</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-user-block">
+        <div class="sidebar-user-row">
+          <div class="sidebar-user-avatar-sm">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="sidebar-user-details">
+            <span class="sidebar-user-name-sm">Admin User</span>
+            <span class="sidebar-user-email">admin@mayurbhanj.com</span>
+          </div>
+        </div>
+        <a href="index.html" class="sidebar-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="admin-main">
+
+      <!-- Top Bar -->
+      <div class="admin-topbar">
+        <div class="admin-topbar-left">
+          <h1 class="admin-page-title">Categories</h1>
+          <p class="admin-page-subtitle">Manage your content categories (<span id="categoryCount">6</span> total)</p>
+        </div>
+        <button class="admin-add-btn" id="addCategoryBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Category
+        </button>
+      </div>
+
+      <!-- Category Cards Grid -->
+      <div class="admin-cards-grid" id="categoriesGrid">
+
+        <!-- Card 1 -->
+        <div class="admin-card">
+          <div class="admin-card-image">
+            <img src="https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=500&h=280&fit=crop&q=80" alt="Board Revision Course" loading="lazy">
+          </div>
+          <div class="admin-card-body">
+            <h3 class="admin-card-title">Board Revision Course</h3>
+            <div class="admin-card-meta">
+              <span class="admin-card-courses">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                8 courses
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="admin-card">
+          <div class="admin-card-image">
+            <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500&h=280&fit=crop&q=80" alt="MCQ Mastery" loading="lazy">
+          </div>
+          <div class="admin-card-body">
+            <h3 class="admin-card-title">MCQ Mastery (IX)</h3>
+            <div class="admin-card-meta">
+              <span class="admin-card-courses">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                12 courses
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="admin-card">
+          <div class="admin-card-image">
+            <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=500&h=280&fit=crop&q=80" alt="Odia Language" loading="lazy">
+          </div>
+          <div class="admin-card-body">
+            <h3 class="admin-card-title">ଓଡ଼ିଆ ଶ୍ରେଣୀ ଅଧ୍ୟୟନ</h3>
+            <div class="admin-card-meta">
+              <span class="admin-card-courses">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                6 courses
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="admin-card">
+          <div class="admin-card-image">
+            <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500&h=280&fit=crop&q=80" alt="Odia Studies" loading="lazy">
+          </div>
+          <div class="admin-card-body">
+            <h3 class="admin-card-title">ଓଡ଼ିଆ ଶ୍ରେଣୀ</h3>
+            <div class="admin-card-meta">
+              <span class="admin-card-courses">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                5 courses
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="admin-card">
+          <div class="admin-card-image">
+            <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=500&h=280&fit=crop&q=80" alt="NRTS-2025" loading="lazy">
+          </div>
+          <div class="admin-card-body">
+            <h3 class="admin-card-title">NRTS-2025</h3>
+            <div class="admin-card-meta">
+              <span class="admin-card-courses">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                4 courses
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="admin-card">
+          <div class="admin-card-image">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&h=280&fit=crop&q=80" alt="Mathematics Foundation" loading="lazy">
+          </div>
+          <div class="admin-card-body">
+            <h3 class="admin-card-title">Mathematics Foundation</h3>
+            <div class="admin-card-meta">
+              <span class="admin-card-courses">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                10 courses
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== COURSES VIEW (hidden by default) ===== -->
+      <div class="courses-view" id="coursesView" style="display:none;">
+        <!-- Courses Top Bar -->
+        <div class="admin-topbar">
+          <div class="admin-topbar-left">
+            <h1 class="admin-page-title" id="coursesTitle">Courses - general</h1>
+            <p class="admin-page-subtitle">Manage your educational courses (<span id="courseCount">0</span> total)</p>
+          </div>
+          <button class="admin-add-btn" id="addCourseBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Course
+          </button>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="courses-filters">
+          <select class="filter-select" id="classFilter">
+            <option value="">All Classes</option>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+          </select>
+        </div>
+
+        <!-- Back to Categories link -->
+        <button class="courses-back" id="backToCategories">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Back to Categories
+        </button>
+
+        <!-- Courses Grid -->
+        <div class="admin-cards-grid" id="coursesGrid"></div>
+      </div>
+
+      <!-- ===== COURSE DETAIL VIEW (hidden by default) ===== -->
+      <div class="course-detail-view" id="courseDetailView" style="display:none;">
+        <!-- Back Button -->
+        <button class="cd-back-btn" id="backToCourses">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Back to Courses
+        </button>
+
+        <!-- Header -->
+        <div class="cd-header">
+          <div class="cd-header-left">
+            <h1 class="cd-title" id="cdTitle">Course Name</h1>
+            <p class="cd-subtitle">Manage course chapters and content</p>
+          </div>
+          <div class="cd-header-actions">
+            <button class="admin-add-btn cd-add-content-btn" id="addContentBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Add Content
+            </button>
+            <button class="cd-add-chapter-btn" id="addChapterBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Add Chapter
+            </button>
+          </div>
+        </div>
+
+        <!-- Chapters List -->
+        <div class="cd-chapters" id="cdChapters"></div>
+      </div>
+
+      <!-- ===== REPORTS VIEW (hidden by default) ===== -->
+      <div class="reports-view" id="reportsView" style="display:none;">
+
+        <!-- Reports Top Bar -->
+        <div class="admin-topbar">
+          <div class="admin-topbar-left">
+            <h1 class="admin-page-title">Teacher Report</h1>
+            <p class="admin-page-subtitle">Track and manage Teacher attendance</p>
+          </div>
+          <button class="admin-add-btn report-export-btn" id="reportExportBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export
+          </button>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="report-filters">
+          <div class="report-filter-group">
+            <label class="report-filter-label">Select Block</label>
+            <select class="report-filter-select" id="reportBlock">
+              <option value="Rairangpur">Rairangpur</option>
+              <option value="Karanjia">Karanjia</option>
+              <option value="Udala">Udala</option>
+            </select>
+          </div>
+          <div class="report-filter-group">
+            <label class="report-filter-label">Select School</label>
+            <select class="report-filter-select" id="reportSchool">
+              <option value="DAV Public School">DAV Public School</option>
+              <option value="Carmel School">Carmel School</option>
+              <option value="Kendriya Vidyalaya">Kendriya Vidyalaya</option>
+              <option value="St. Xavier's School">St. Xavier's School</option>
+              <option value="Govt. High School">Govt. High School</option>
+            </select>
+          </div>
+          <div class="report-filter-group">
+            <label class="report-filter-label">Start Date</label>
+            <input type="date" class="report-filter-input" id="reportStartDate" value="2026-02-06">
+          </div>
+          <div class="report-filter-group">
+            <label class="report-filter-label">End Date</label>
+            <input type="date" class="report-filter-input" id="reportEndDate" value="2026-02-06">
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="report-search">
+          <svg class="report-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" class="report-search-input" id="reportSearchInput" placeholder="Search students by name, ID, or other details...">
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="report-summary">
+          <div class="report-summary-card report-summary-blue">
+            <div class="report-summary-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="report-summary-info">
+              <span class="report-summary-label">Total Teacher</span>
+              <span class="report-summary-value">15</span>
+            </div>
+          </div>
+          <div class="report-summary-card report-summary-green">
+            <div class="report-summary-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="report-summary-info">
+              <span class="report-summary-label">Total hours</span>
+              <span class="report-summary-value report-summary-green-text" id="reportTotalHours">60</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two-column: Table + Detail Panel -->
+        <div class="report-layout">
+
+          <!-- LEFT: Table + Pagination -->
+          <div class="report-main-panel" id="reportMainPanel">
+            <div class="report-table-section">
+              <div class="report-table-header">
+                <h3 class="report-table-title" id="reportTableTitle">Attendance Data for 2026-02-06 - Page 1 of 2</h3>
+              </div>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th class="report-th">TEACHER</th>
+                    <th class="report-th report-th-sort" id="reportSortHours">TOTAL HOURS
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="7 15 12 20 17 15"/>
+                        <polyline points="17 9 12 4 7 9"/>
+                      </svg>
+                    </th>
+                    <th class="report-th report-th-action">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                  <!-- Rows dynamically inserted -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="report-pagination">
+              <span class="report-pagination-info" id="reportPaginationInfo">Showing 1 to 10 of 15 entries</span>
+              <div class="report-pagination-controls">
+                <button class="report-page-btn report-page-prev" id="reportPrevBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"/>
+                  </svg>
+                  Previous
+                </button>
+                <div class="report-page-numbers" id="reportPageNumbers"></div>
+                <button class="report-page-btn report-page-next" id="reportNextBtn">
+                  Next
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Teacher Detail Panel (hidden by default) -->
+          <div class="report-detail-panel" id="reportDetailPanel">
+            <div class="report-detail-header">
+              <div>
+                <h2 class="report-detail-name" id="detailTeacherName">John Smith</h2>
+                <p class="report-detail-subtitle">Detailed Class Records</p>
+              </div>
+              <button class="report-detail-close" id="reportDetailClose">&times;</button>
+            </div>
+
+            <!-- Detail Summary Cards -->
+            <div class="report-detail-summary">
+              <div class="report-detail-card">
+                <div class="report-detail-card-info">
+                  <span class="report-detail-card-label">Total No of Days</span>
+                  <span class="report-detail-card-value" id="detailOverallPeriod">17</span>
+                </div>
+                <div class="report-detail-card-icon detail-icon-blue">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                    <line x1="8" y1="14" x2="10" y2="14"/>
+                    <line x1="14" y1="14" x2="16" y2="14"/>
+                    <line x1="8" y1="18" x2="10" y2="18"/>
+                    <line x1="14" y1="18" x2="16" y2="18"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="report-detail-card">
+                <div class="report-detail-card-info">
+                  <span class="report-detail-card-label">Overall Hours</span>
+                  <span class="report-detail-card-value" id="detailOverallHours">34</span>
+                </div>
+                <div class="report-detail-card-icon detail-icon-green">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detail Table -->
+            <div class="report-detail-table-section">
+              <table class="report-detail-table">
+                <thead>
+                  <tr>
+                    <th class="report-detail-th">Date</th>
+                    <th class="report-detail-th">Total Hours</th>
+                  </tr>
+                </thead>
+                <tbody id="detailTableBody">
+                  <!-- Rows dynamically inserted -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Detail Pagination -->
+            <div class="report-detail-pagination">
+              <span class="report-detail-pagination-info" id="detailPaginationInfo">Showing 1 to 5 of 15 entries</span>
+              <div class="report-pagination-controls">
+                <button class="report-page-btn report-page-prev" id="detailPrevBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"/>
+                  </svg>
+                  Previous
+                </button>
+                <div class="report-page-numbers" id="detailPageNumbers"></div>
+                <button class="report-page-btn report-page-next" id="detailNextBtn">
+                  Next
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== TEACHERS VIEW (hidden by default) ===== -->
+      <div class="teachers-view" id="teachersView" style="display:none;">
+
+        <!-- Teachers Top Bar -->
+        <div class="admin-topbar">
+          <div class="admin-topbar-left">
+            <h1 class="admin-page-title">Manage Teachers</h1>
+            <p class="admin-page-subtitle">View, transfer, update and manage teacher accounts</p>
+          </div>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="report-filters">
+          <div class="report-filter-group">
+            <label class="report-filter-label">Select Block</label>
+            <select class="report-filter-select" id="teacherBlock">
+              <option value="Rairangpur">Rairangpur</option>
+              <option value="Karanjia">Karanjia</option>
+              <option value="Udala">Udala</option>
+            </select>
+          </div>
+          <div class="report-filter-group">
+            <label class="report-filter-label">Select School</label>
+            <select class="report-filter-select" id="teacherSchool">
+              <option value="Carmel School">Carmel School</option>
+              <option value="DAV Public School">DAV Public School</option>
+              <option value="Kendriya Vidyalaya">Kendriya Vidyalaya</option>
+            </select>
+          </div>
+          <div class="report-filter-group">
+            <label class="report-filter-label">Start Date</label>
+            <input type="date" class="report-filter-input" id="teacherStartDate" value="2026-02-06">
+          </div>
+          <div class="report-filter-group">
+            <label class="report-filter-label">End Date</label>
+            <input type="date" class="report-filter-input" id="teacherEndDate" value="2026-02-06">
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="report-search">
+          <svg class="report-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" class="report-search-input" id="teacherSearchInput" placeholder="Search students by name, ID, or other details...">
+        </div>
+
+        <!-- Summary Card -->
+        <div class="report-summary" style="grid-template-columns: 1fr;">
+          <div class="report-summary-card report-summary-blue">
+            <div class="report-summary-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="report-summary-info">
+              <span class="report-summary-label">Total Teacher</span>
+              <span class="report-summary-value">15</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="report-table-section">
+          <div class="report-table-header">
+            <h3 class="report-table-title" id="teacherTableTitle">Attendance Data for 2026-02-06 - Page 1 of 2</h3>
+          </div>
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th class="report-th">TEACHER</th>
+                <th class="report-th">PHONE NUMBER</th>
+                <th class="report-th">EMAIL ID</th>
+                <th class="report-th" style="width:160px;"></th>
+              </tr>
+            </thead>
+            <tbody id="teacherTableBody">
+              <!-- Rows dynamically inserted -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="report-pagination">
+          <span class="report-pagination-info" id="teacherPaginationInfo">Showing 1 to 10 of 15 entries</span>
+          <div class="report-pagination-controls">
+            <button class="report-page-btn report-page-prev" id="teacherPrevBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+              Previous
+            </button>
+            <div class="report-page-numbers" id="teacherPageNumbers"></div>
+            <button class="report-page-btn report-page-next" id="teacherNextBtn">
+              Next
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ===== ADD CATEGORY MODAL ===== -->
+  <div class="add-cat-overlay" id="addCatModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="addCatClose">&times;</button>
+      <h2 class="add-cat-heading">Add Category</h2>
+      <form class="add-cat-form" id="addCatForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label" for="catName">Category Name <span class="required">*</span></label>
+          <input type="text" id="catName" class="add-cat-input" placeholder="e.g., Mathematics Foundation" required>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label" for="catDesc">Description</label>
+          <textarea id="catDesc" class="add-cat-textarea" placeholder="Enter category description..." rows="4"></textarea>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Category Image (Optional)</label>
+          <div class="add-cat-upload" id="catUploadArea">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p class="add-cat-upload-text">Click to upload an image</p>
+            <p class="add-cat-upload-hint">PNG, JPG, GIF up to 5MB</p>
+            <input type="file" id="catImage" accept="image/*" class="add-cat-file-input">
+          </div>
+        </div>
+        <div class="add-cat-actions">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="addCatCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-create">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== CHOOSE CONTENT TYPE MODAL ===== -->
+  <div class="add-cat-overlay" id="contentTypeModal">
+    <div class="add-cat-modal content-type-modal">
+      <button class="add-cat-close" id="contentTypeClose">&times;</button>
+      <h2 class="add-cat-heading">Choose Content Type</h2>
+      <div class="ct-options">
+        <!-- PDF -->
+        <button class="ct-option ct-option-pdf" id="ctPdf">
+          <div class="ct-option-icon ct-icon-blue">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="13" y2="17"/>
+            </svg>
+          </div>
+          <span class="ct-option-title">Document</span>
+          <span class="ct-option-desc">Upload PDF files</span>
+        </button>
+        <!-- Video -->
+        <button class="ct-option ct-option-video" id="ctVideo">
+          <div class="ct-option-icon ct-icon-red">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </div>
+          <span class="ct-option-title">Video</span>
+          <span class="ct-option-desc">Upload or embed videos</span>
+        </button>
+        <!-- External Link -->
+        <button class="ct-option ct-option-link" id="ctLink">
+          <div class="ct-option-icon ct-icon-purple">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <span class="ct-option-title">External Link</span>
+          <span class="ct-option-desc">Add links to external resources</span>
+        </button>
+      </div>
+      <div class="ct-footer">
+        <button type="button" class="add-cat-btn add-cat-btn-cancel" id="contentTypeBack">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADD DOCUMENT MODAL ===== -->
+  <div class="add-cat-overlay" id="addDocModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="addDocClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        </span>
+        Add Document
+      </h2>
+      <form class="add-cat-form" id="addDocForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Add to Chapter <span class="required">*</span></label>
+          <select class="add-cat-select" id="docChapter" required>
+            <option value="">Select a chapter</option>
+          </select>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Document Name</label>
+          <input type="text" class="add-cat-input" placeholder="e.g., Chapter Notes PDF">
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Upload Document</label>
+          <div class="add-cat-upload" id="docUploadArea">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <p class="add-cat-upload-text">Click to upload or drag and drop</p>
+            <p class="add-cat-upload-hint">PDF, DOC, PPT files up to 10MB</p>
+            <input type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" class="add-cat-file-input">
+          </div>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Document Type</label>
+          <select class="add-cat-select">
+            <option value="">Select type</option>
+            <option value="pdf">PDF</option>
+            <option value="doc">DOC / DOCX</option>
+            <option value="ppt">PPT / PPTX</option>
+          </select>
+        </div>
+        <div class="add-cat-actions add-cat-actions-spread">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel add-cat-btn-outline" id="addDocBack">Back</button>
+          <div class="add-cat-actions-right">
+            <button type="button" class="add-cat-btn add-cat-btn-cancel" id="addDocCancel">Cancel</button>
+            <button type="submit" class="add-cat-btn add-cat-btn-create">Create Document</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADD VIDEO MODAL ===== -->
+  <div class="add-cat-overlay" id="addVideoModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="addVideoClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-red">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </span>
+        Add Video
+      </h2>
+      <form class="add-cat-form" id="addVideoForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Video Name</label>
+          <input type="text" class="add-cat-input" placeholder="e.g., Introduction to Algebra">
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Upload Video</label>
+          <div class="add-cat-upload" id="videoUploadArea">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <p class="add-cat-upload-text">Click to upload or drag and drop</p>
+            <p class="add-cat-upload-hint">MP4, MOV, AVI files up to 100MB</p>
+            <input type="file" accept="video/*" class="add-cat-file-input">
+          </div>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Description (Optional)</label>
+          <textarea class="add-cat-textarea" placeholder="Brief description of the video content..." rows="3"></textarea>
+        </div>
+        <div class="add-cat-actions add-cat-actions-spread">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel add-cat-btn-outline" id="addVideoBack">Back</button>
+          <div class="add-cat-actions-right">
+            <button type="button" class="add-cat-btn add-cat-btn-cancel" id="addVideoCancel">Cancel</button>
+            <button type="submit" class="add-cat-btn add-cat-btn-create">Create Video</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADD EXTERNAL LINK MODAL ===== -->
+  <div class="add-cat-overlay" id="addLinkModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="addLinkClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-purple">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </span>
+        Add External Link
+      </h2>
+      <form class="add-cat-form" id="addLinkForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Add to Chapter <span class="required">*</span></label>
+          <select class="add-cat-select" id="linkChapter" required>
+            <option value="">Select a chapter</option>
+          </select>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Link Name</label>
+          <input type="text" class="add-cat-input" placeholder="e.g., Khan Academy - Algebra Basics">
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">URL</label>
+          <input type="url" class="add-cat-input" placeholder="https://www.khanacademy.org/math/algebra">
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Description (Optional)</label>
+          <textarea class="add-cat-textarea" placeholder="What students will find at this link..." rows="3"></textarea>
+        </div>
+        <div class="add-cat-actions add-cat-actions-spread">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel add-cat-btn-outline" id="addLinkBack">Back</button>
+          <div class="add-cat-actions-right">
+            <button type="button" class="add-cat-btn add-cat-btn-cancel" id="addLinkCancel">Cancel</button>
+            <button type="submit" class="add-cat-btn add-cat-btn-create">Create External Link</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== EDIT TOPIC MODAL ===== -->
+  <div class="add-cat-overlay" id="editTopicModal">
+    <div class="add-cat-modal edit-topic-modal">
+      <button class="add-cat-close" id="editTopicClose">&times;</button>
+      <h2 class="add-cat-heading">Edit Topic</h2>
+      <form class="add-cat-form" id="editTopicForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Topic Name</label>
+          <input type="text" class="add-cat-input" id="editTopicName" required>
+        </div>
+        <div class="add-cat-actions" style="justify-content: flex-end;">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="editTopicCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-update">Update Topic</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADD CHAPTER MODAL ===== -->
+  <div class="add-cat-overlay" id="addChapterModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="addChapterClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </span>
+        Add Chapter
+      </h2>
+      <form class="add-cat-form" id="addChapterForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Chapter Name <span class="required">*</span></label>
+          <input type="text" class="add-cat-input" placeholder="e.g., Quadratic Equations" required>
+        </div>
+        <div class="add-cat-actions">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="addChapterCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-create">Create Chapter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADD COURSE MODAL ===== -->
+  <div class="add-cat-overlay" id="addCourseModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="addCourseClose">&times;</button>
+      <h2 class="add-cat-heading">Add Course</h2>
+      <form class="add-cat-form" id="addCourseForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label" for="courseName">Course Name <span class="required">*</span></label>
+          <input type="text" id="courseName" class="add-cat-input" placeholder="e.g., Advanced Mathematics" required>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label" for="courseDesc">Description</label>
+          <textarea id="courseDesc" class="add-cat-textarea" placeholder="Course description..." rows="4"></textarea>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label" for="courseCategory">Category <span class="required">*</span></label>
+          <select id="courseCategory" class="add-cat-select" required>
+            <option value="">Select a category</option>
+            <option value="Board Revision Course">Board Revision Course</option>
+            <option value="MCQ Mastery (IX)">MCQ Mastery (IX)</option>
+            <option value="ଓଡ଼ିଆ ଶ୍ରେଣୀ ଅଧ୍ୟୟନ">ଓଡ଼ିଆ ଶ୍ରେଣୀ ଅଧ୍ୟୟନ</option>
+            <option value="ଓଡ଼ିଆ ଶ୍ରେଣୀ">ଓଡ଼ିଆ ଶ୍ରେଣୀ</option>
+            <option value="NRTS-2025">NRTS-2025</option>
+            <option value="Mathematics Foundation">Mathematics Foundation</option>
+          </select>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Course Image (Optional)</label>
+          <div class="add-cat-upload" id="courseUploadArea">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p class="add-cat-upload-text">Click to upload an image</p>
+            <p class="add-cat-upload-hint">PNG, JPG, GIF up to 5MB</p>
+            <input type="file" id="courseImage" accept="image/*" class="add-cat-file-input">
+          </div>
+        </div>
+        <div class="add-cat-actions">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="addCourseCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-create">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== TRANSFER TEACHER MODAL ===== -->
+  <div class="add-cat-overlay" id="transferTeacherModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="transferTeacherClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
+        </span>
+        Transfer Teacher
+      </h2>
+      <form class="add-cat-form" id="transferTeacherForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Teacher Name</label>
+          <input type="text" class="add-cat-input" id="transferTeacherName" readonly>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Current School</label>
+          <input type="text" class="add-cat-input" id="transferCurrentSchool" value="DAV Public School" readonly>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Transfer to School <span class="required">*</span></label>
+          <select class="add-cat-select" id="transferToSchool" required>
+            <option value="">Select a school</option>
+            <option value="DAV Public School">DAV Public School</option>
+            <option value="Carmel School">Carmel School</option>
+            <option value="Kendriya Vidyalaya">Kendriya Vidyalaya</option>
+            <option value="St. Xavier's School">St. Xavier's School</option>
+            <option value="Govt. High School">Govt. High School</option>
+          </select>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Transfer Date <span class="required">*</span></label>
+          <input type="date" class="add-cat-input" id="transferDate" required>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Reason (Optional)</label>
+          <textarea class="add-cat-textarea" id="transferReason" placeholder="Enter reason for transfer..." rows="3"></textarea>
+        </div>
+        <div class="add-cat-actions">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="transferTeacherCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-create">Transfer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== UPDATE TEACHER MODAL ===== -->
+  <div class="add-cat-overlay" id="updateTeacherModal">
+    <div class="add-cat-modal">
+      <button class="add-cat-close" id="updateTeacherClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </span>
+        Update Teacher
+      </h2>
+      <form class="add-cat-form" id="updateTeacherForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Teacher Name <span class="required">*</span></label>
+          <input type="text" class="add-cat-input" id="updateTeacherName" required>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Phone Number <span class="required">*</span></label>
+          <input type="tel" class="add-cat-input" id="updateTeacherPhone" required>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Email ID <span class="required">*</span></label>
+          <input type="email" class="add-cat-input" id="updateTeacherEmail" required>
+        </div>
+        <div class="add-cat-actions">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="updateTeacherCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-update">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== PASSWORD RESET MODAL ===== -->
+  <div class="add-cat-overlay" id="passwordResetModal">
+    <div class="add-cat-modal edit-topic-modal">
+      <button class="add-cat-close" id="passwordResetClose">&times;</button>
+      <h2 class="add-cat-heading ct-heading-icon">
+        <span class="ct-heading-badge ct-badge-orange">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
+        Reset Password
+      </h2>
+      <form class="add-cat-form" id="passwordResetForm">
+        <div class="add-cat-field">
+          <label class="add-cat-label">Teacher Name</label>
+          <input type="text" class="add-cat-input" id="resetTeacherName" readonly>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">New Password <span class="required">*</span></label>
+          <input type="password" class="add-cat-input" id="resetNewPassword" placeholder="Enter new password" required>
+        </div>
+        <div class="add-cat-field">
+          <label class="add-cat-label">Confirm Password <span class="required">*</span></label>
+          <input type="password" class="add-cat-input" id="resetConfirmPassword" placeholder="Confirm new password" required>
+        </div>
+        <div class="add-cat-actions">
+          <button type="button" class="add-cat-btn add-cat-btn-cancel" id="passwordResetCancel">Cancel</button>
+          <button type="submit" class="add-cat-btn add-cat-btn-update">Reset Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    // ===== DUMMY COURSES DATA =====
+    const categoryCourses = {
+      'Board Revision Course': [
+        { name: 'Mathematics Class 10', author: 'Ayush Sharma', img: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=220&fit=crop&q=80' },
+        { name: 'Science Class 10', author: 'Priya Patel', img: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=220&fit=crop&q=80' },
+        { name: 'English Class 10', author: 'Ankit Raj', img: 'https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=400&h=220&fit=crop&q=80' },
+        { name: 'Social Science Class 10', author: 'Meera Das', img: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=400&h=220&fit=crop&q=80' },
+        { name: 'Hindi Class 10', author: 'Sunita Mishra', img: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&h=220&fit=crop&q=80' },
+        { name: 'Odia Class 10', author: 'Bikash Nayak', img: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=220&fit=crop&q=80' },
+        { name: 'Computer Class 10', author: 'Ravi Kumar', img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=220&fit=crop&q=80' },
+        { name: 'Physical Education Class 10', author: 'Deepak Singh', img: 'https://images.unsplash.com/photo-1461896836934-bd45ba8fcf9b?w=400&h=220&fit=crop&q=80' }
+      ],
+      'MCQ Mastery (IX)': [
+        { name: 'EHS_Grade9', author: 'US_MATH', img: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=220&fit=crop&q=80' },
+        { name: 'General Knowledge', author: 'Aveti X', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=220&fit=crop&q=80' },
+        { name: 'Mystic Mythology', author: 'Aveti X', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=220&fit=crop&q=80' },
+        { name: 'Motivation', author: 'Aveti X', img: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=220&fit=crop&q=80' },
+        { name: 'Exploring Society', author: 'Aveti X', img: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=220&fit=crop&q=80' }
+      ],
+      'ଓଡ଼ିଆ ଶ୍ରେଣୀ ଅଧ୍ୟୟନ': [
+        { name: 'ଓଡ଼ିଆ ବ୍ୟାକରଣ', author: 'Bikash Nayak', img: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ ସାହିତ୍ୟ', author: 'Sunita Mishra', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ ପଦ୍ୟ', author: 'Meera Das', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ ଗଦ୍ୟ', author: 'Priya Patel', img: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ ନାଟକ', author: 'Ankit Raj', img: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ ରଚନା', author: 'Ayush Sharma', img: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?w=400&h=220&fit=crop&q=80' }
+      ],
+      'ଓଡ଼ିଆ ଶ୍ରେଣୀ': [
+        { name: 'ଓଡ଼ିଆ Class 6', author: 'Bikash Nayak', img: 'https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ Class 7', author: 'Sunita Mishra', img: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ Class 8', author: 'Meera Das', img: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ Class 9', author: 'Priya Patel', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=220&fit=crop&q=80' },
+        { name: 'ଓଡ଼ିଆ Class 10', author: 'Ankit Raj', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=220&fit=crop&q=80' }
+      ],
+      'NRTS-2025': [
+        { name: 'NRTS Practice Set 1', author: 'Ravi Kumar', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=220&fit=crop&q=80' },
+        { name: 'NRTS Practice Set 2', author: 'Deepak Singh', img: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=220&fit=crop&q=80' },
+        { name: 'NRTS Mock Test', author: 'Ayush Sharma', img: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=220&fit=crop&q=80' },
+        { name: 'NRTS Study Material', author: 'Priya Patel', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=220&fit=crop&q=80' }
+      ],
+      'Mathematics Foundation': [
+        { name: 'Algebra Basics', author: 'Ravi Kumar', img: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=220&fit=crop&q=80' },
+        { name: 'Geometry Essentials', author: 'Ayush Sharma', img: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=220&fit=crop&q=80' },
+        { name: 'Trigonometry', author: 'Priya Patel', img: 'https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=400&h=220&fit=crop&q=80' },
+        { name: 'Number Theory', author: 'Ankit Raj', img: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=400&h=220&fit=crop&q=80' },
+        { name: 'Statistics & Probability', author: 'Meera Das', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=220&fit=crop&q=80' },
+        { name: 'Mensuration', author: 'Deepak Singh', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=220&fit=crop&q=80' },
+        { name: 'Arithmetic', author: 'Sunita Mishra', img: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&h=220&fit=crop&q=80' },
+        { name: 'Linear Equations', author: 'Bikash Nayak', img: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=220&fit=crop&q=80' },
+        { name: 'Coordinate Geometry', author: 'Ravi Kumar', img: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?w=400&h=220&fit=crop&q=80' },
+        { name: 'Calculus Introduction', author: 'Ayush Sharma', img: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=220&fit=crop&q=80' }
+      ]
+    };
+
+    // ===== VIEW ELEMENTS =====
+    const categoriesTopbar = document.querySelector('.admin-main > .admin-topbar');
+    const categoriesGrid = document.getElementById('categoriesGrid');
+    const coursesView = document.getElementById('coursesView');
+    const coursesGrid = document.getElementById('coursesGrid');
+    const coursesTitle = document.getElementById('coursesTitle');
+    const courseCount = document.getElementById('courseCount');
+
+    // ===== SIDEBAR NAV HELPERS =====
+    function setSidebarActive(section) {
+      document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+      const target = document.querySelector('.sidebar-nav-item[data-section="' + section + '"]');
+      if (target) target.classList.add('active');
+    }
+
+    const backBtn = document.getElementById('backToCategories');
+
+    // ===== RENDER COURSE CARDS =====
+    // ===== DUMMY CHAPTERS DATA =====
+    const courseChapters = {
+      '_default': [
+        { name: 'Equations and Inequalities', lessons: ['Introduction to Algebraic Expressions', 'Solving Linear Equations', 'Understanding Inequalities', 'Compound Inequalities', 'Absolute Value Equations and Inequalities'] },
+        { name: 'Linear Equations and Functions', lessons: ['Slope and Rate of Change', 'Graphing Linear Equations', 'Writing Linear Equations', 'Linear Regression'] },
+        { name: 'Linear Systems', lessons: ['Solving by Graphing', 'Substitution Method', 'Elimination Method'] },
+        { name: 'Complex Numbers', lessons: ['Introduction to Complex Numbers', 'Operations with Complex Numbers'] }
+      ],
+      'Mathematics Class 10': [
+        { name: 'Real Numbers', lessons: ['Euclid\'s Division Lemma', 'Fundamental Theorem of Arithmetic', 'Irrational Numbers', 'Rational and Decimal Expansions'] },
+        { name: 'Polynomials', lessons: ['Zeroes of a Polynomial', 'Division Algorithm', 'Relationship Between Zeroes and Coefficients'] },
+        { name: 'Pair of Linear Equations', lessons: ['Graphical Method', 'Algebraic Methods', 'Cross-Multiplication Method'] },
+        { name: 'Quadratic Equations', lessons: ['Standard Form', 'Factorization Method', 'Quadratic Formula', 'Nature of Roots'] }
+      ],
+      'Science Class 10': [
+        { name: 'Chemical Reactions', lessons: ['Types of Reactions', 'Balancing Equations', 'Corrosion and Rancidity'] },
+        { name: 'Acids, Bases and Salts', lessons: ['Properties of Acids', 'Properties of Bases', 'pH Scale', 'Salts and their Uses'] },
+        { name: 'Life Processes', lessons: ['Nutrition', 'Respiration', 'Transportation', 'Excretion'] }
+      ],
+      'General Knowledge': [
+        { name: 'World Geography', lessons: ['Continents and Oceans', 'Major Rivers', 'Mountain Ranges', 'Climate Zones'] },
+        { name: 'Indian History', lessons: ['Ancient India', 'Medieval India', 'Modern India', 'Freedom Movement'] },
+        { name: 'Current Affairs', lessons: ['International Events', 'National Events', 'Science and Technology'] }
+      ],
+      'Algebra Basics': [
+        { name: 'Variables and Expressions', lessons: ['What are Variables', 'Writing Expressions', 'Evaluating Expressions', 'Simplifying Expressions'] },
+        { name: 'Equations', lessons: ['One-Step Equations', 'Two-Step Equations', 'Multi-Step Equations', 'Equations with Variables on Both Sides'] },
+        { name: 'Inequalities', lessons: ['Graphing Inequalities', 'Solving Inequalities', 'Compound Inequalities'] },
+        { name: 'Functions', lessons: ['What is a Function', 'Function Notation', 'Linear Functions', 'Quadratic Functions'] }
+      ]
+    };
+
+    function getChapters(courseName) {
+      return courseChapters[courseName] || courseChapters['_default'];
+    }
+
+    // ===== COURSE DETAIL VIEW =====
+    const courseDetailView = document.getElementById('courseDetailView');
+    const cdTitle = document.getElementById('cdTitle');
+    const cdChapters = document.getElementById('cdChapters');
+    let lastCoursesState = null; // track whether we came from all courses or category
+
+    function showCourseDetail(courseName) {
+      const chapters = getChapters(courseName);
+      cdTitle.textContent = courseName;
+
+      // Action icons HTML
+      const actionsHTML =
+        '<div class="cd-actions">' +
+          '<button class="cd-action-btn cd-act-edit" title="Edit"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>' +
+          '<button class="cd-action-btn cd-act-delete" title="Delete"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>' +
+          '<button class="cd-action-btn cd-act-toggle" title="Show/Hide"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>' +
+          '<button class="cd-action-btn cd-act-add" title="Add"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>' +
+        '</div>';
+
+      // Render chapters with accordion
+      cdChapters.innerHTML = chapters.map((ch, ci) => {
+        const lessonsHTML = ch.lessons.map((l, li) =>
+          '<div class="cd-lesson">' +
+            '<span class="cd-lesson-drag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2"><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/></svg></span>' +
+            '<span class="cd-lesson-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></span>' +
+            '<span class="cd-lesson-num">' + (ci + 1) + '.' + (li + 1) + '</span>' +
+            '<span class="cd-lesson-name">' + l + '</span>' +
+            actionsHTML +
+          '</div>'
+        ).join('');
+
+        return '<div class="cd-chapter" data-chapter="' + ci + '">' +
+          '<div class="cd-chapter-header' + (ci === 0 ? ' open-bg' : '') + '">' +
+            '<span class="cd-chapter-drag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2"><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/></svg></span>' +
+            '<button class="cd-chapter-toggle' + (ci === 0 ? ' open' : '') + '">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+            '</button>' +
+            '<span class="cd-chapter-num">' + (ci + 1) + '</span>' +
+            '<span class="cd-chapter-name">' + ch.name + '</span>' +
+            actionsHTML +
+          '</div>' +
+          '<div class="cd-chapter-lessons' + (ci === 0 ? ' open' : '') + '">' + lessonsHTML + '</div>' +
+        '</div>';
+      }).join('');
+
+      // Attach toggle listeners
+      cdChapters.querySelectorAll('.cd-chapter-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const chapter = toggle.closest('.cd-chapter');
+          const header = chapter.querySelector('.cd-chapter-header');
+          const lessons = chapter.querySelector('.cd-chapter-lessons');
+          toggle.classList.toggle('open');
+          lessons.classList.toggle('open');
+          header.classList.toggle('open-bg');
+        });
+      });
+
+      // Hide other views, show detail
+      categoriesTopbar.style.display = 'none';
+      categoriesGrid.style.display = 'none';
+      coursesView.style.display = 'none';
+      courseDetailView.style.display = 'block';
+    }
+
+    function hideCourseDetail() {
+      courseDetailView.style.display = 'none';
+      // Return to the previous courses view
+      if (lastCoursesState === 'all') {
+        showAllCourses();
+      } else if (lastCoursesState) {
+        showCourses(lastCoursesState);
+      } else {
+        showAllCourses();
+      }
+    }
+
+    document.getElementById('backToCourses').addEventListener('click', hideCourseDetail);
+
+    // Content Type Modal
+    const contentTypeModal = document.getElementById('contentTypeModal');
+
+    document.getElementById('addContentBtn').addEventListener('click', () => {
+      openModal(contentTypeModal);
+    });
+
+    // Plus icon on chapters/lessons also opens content type modal
+    // Edit icon opens edit topic modal
+    cdChapters.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('.cd-act-add');
+      if (addBtn) {
+        e.stopPropagation();
+        openModal(contentTypeModal);
+        return;
+      }
+
+      // Delete chapter or lesson
+      const deleteBtn = e.target.closest('.cd-act-delete');
+      if (deleteBtn) {
+        e.stopPropagation();
+        const chapterHeader = deleteBtn.closest('.cd-chapter-header');
+        const lessonRow = deleteBtn.closest('.cd-lesson');
+        if (chapterHeader) {
+          const chapter = chapterHeader.closest('.cd-chapter');
+          const chapterName = chapterHeader.querySelector('.cd-chapter-name')?.textContent || 'this chapter';
+          if (confirm('Are you sure you want to delete "' + chapterName + '" and all its lessons?')) {
+            chapter.remove();
+          }
+        } else if (lessonRow) {
+          const lessonName = lessonRow.querySelector('.cd-lesson-name')?.textContent || 'this lesson';
+          if (confirm('Are you sure you want to delete "' + lessonName + '"?')) {
+            lessonRow.remove();
+          }
+        }
+        return;
+      }
+
+      // Toggle show/hide chapter or lesson
+      const toggleBtn = e.target.closest('.cd-act-toggle');
+      if (toggleBtn) {
+        e.stopPropagation();
+        const chapterHeader = toggleBtn.closest('.cd-chapter-header');
+        const lessonRow = toggleBtn.closest('.cd-lesson');
+        const target = chapterHeader ? chapterHeader.closest('.cd-chapter') : lessonRow;
+        if (target) {
+          target.classList.toggle('cd-hidden');
+          // Swap the eye icon
+          const svg = toggleBtn.querySelector('svg');
+          if (target.classList.contains('cd-hidden')) {
+            svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+            toggleBtn.title = 'Show';
+          } else {
+            svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+            toggleBtn.title = 'Hide';
+          }
+        }
+        return;
+      }
+
+      const editBtn = e.target.closest('.cd-act-edit');
+      if (editBtn) {
+        e.stopPropagation();
+        // Get the name of the chapter or lesson being edited
+        const row = editBtn.closest('.cd-chapter-header') || editBtn.closest('.cd-lesson');
+        let name = '';
+        if (row) {
+          const chName = row.querySelector('.cd-chapter-name');
+          const lName = row.querySelector('.cd-lesson-name');
+          const chNum = row.querySelector('.cd-chapter-num');
+          const lNum = row.querySelector('.cd-lesson-num');
+          if (chName) name = (chNum ? chNum.textContent + ' ' : '') + chName.textContent;
+          else if (lName) name = (lNum ? lNum.textContent + ' ' : '') + lName.textContent;
+        }
+        document.getElementById('editTopicName').value = name;
+        openModal(document.getElementById('editTopicModal'));
+      }
+    });
+
+    // Edit Topic Modal
+    const editTopicModal = document.getElementById('editTopicModal');
+    document.getElementById('editTopicClose').addEventListener('click', () => closeModal(editTopicModal));
+    document.getElementById('editTopicCancel').addEventListener('click', () => closeModal(editTopicModal));
+    editTopicModal.addEventListener('click', (e) => { if (e.target === editTopicModal) closeModal(editTopicModal); });
+    document.getElementById('editTopicForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Topic updated successfully!');
+      closeModal(editTopicModal);
+    });
+
+    function closeContentType() {
+      contentTypeModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('contentTypeClose').addEventListener('click', closeContentType);
+    document.getElementById('contentTypeBack').addEventListener('click', closeContentType);
+    contentTypeModal.addEventListener('click', (e) => {
+      if (e.target === contentTypeModal) closeContentType();
+    });
+
+    // Helper: populate chapter dropdowns with current chapters
+    function populateChapterDropdowns() {
+      const chapters = cdChapters.querySelectorAll('.cd-chapter-name');
+      const options = '<option value="">Select a chapter</option>' +
+        Array.from(chapters).map((el, i) =>
+          '<option value="' + (i + 1) + '">' + (i + 1) + ' ' + el.textContent + '</option>'
+        ).join('');
+      const docChapter = document.getElementById('docChapter');
+      const linkChapter = document.getElementById('linkChapter');
+      if (docChapter) docChapter.innerHTML = options;
+      if (linkChapter) linkChapter.innerHTML = options;
+    }
+
+    // Generic modal open/close helpers
+    function openModal(modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      const form = modal.querySelector('form');
+      if (form) form.reset();
+    }
+
+    // === Add Document Modal ===
+    const addDocModal = document.getElementById('addDocModal');
+    document.getElementById('ctPdf').addEventListener('click', () => {
+      closeContentType();
+      populateChapterDropdowns();
+      openModal(addDocModal);
+    });
+    document.getElementById('addDocClose').addEventListener('click', () => closeModal(addDocModal));
+    document.getElementById('addDocCancel').addEventListener('click', () => closeModal(addDocModal));
+    document.getElementById('addDocBack').addEventListener('click', () => {
+      closeModal(addDocModal);
+      openModal(contentTypeModal);
+    });
+    addDocModal.addEventListener('click', (e) => { if (e.target === addDocModal) closeModal(addDocModal); });
+    document.getElementById('addDocForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Document created successfully!');
+      closeModal(addDocModal);
+    });
+
+    // === Add Video Modal ===
+    const addVideoModal = document.getElementById('addVideoModal');
+    document.getElementById('ctVideo').addEventListener('click', () => {
+      closeContentType();
+      openModal(addVideoModal);
+    });
+    document.getElementById('addVideoClose').addEventListener('click', () => closeModal(addVideoModal));
+    document.getElementById('addVideoCancel').addEventListener('click', () => closeModal(addVideoModal));
+    document.getElementById('addVideoBack').addEventListener('click', () => {
+      closeModal(addVideoModal);
+      openModal(contentTypeModal);
+    });
+    addVideoModal.addEventListener('click', (e) => { if (e.target === addVideoModal) closeModal(addVideoModal); });
+    document.getElementById('addVideoForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Video created successfully!');
+      closeModal(addVideoModal);
+    });
+
+    // === Add External Link Modal ===
+    const addLinkModal = document.getElementById('addLinkModal');
+    document.getElementById('ctLink').addEventListener('click', () => {
+      closeContentType();
+      populateChapterDropdowns();
+      openModal(addLinkModal);
+    });
+    document.getElementById('addLinkClose').addEventListener('click', () => closeModal(addLinkModal));
+    document.getElementById('addLinkCancel').addEventListener('click', () => closeModal(addLinkModal));
+    document.getElementById('addLinkBack').addEventListener('click', () => {
+      closeModal(addLinkModal);
+      openModal(contentTypeModal);
+    });
+    addLinkModal.addEventListener('click', (e) => { if (e.target === addLinkModal) closeModal(addLinkModal); });
+    document.getElementById('addLinkForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('External link created successfully!');
+      closeModal(addLinkModal);
+    });
+
+    // === Add Chapter Modal ===
+    const addChapterModal = document.getElementById('addChapterModal');
+    document.getElementById('addChapterBtn').addEventListener('click', () => {
+      openModal(addChapterModal);
+    });
+    document.getElementById('addChapterClose').addEventListener('click', () => closeModal(addChapterModal));
+    document.getElementById('addChapterCancel').addEventListener('click', () => closeModal(addChapterModal));
+    addChapterModal.addEventListener('click', (e) => { if (e.target === addChapterModal) closeModal(addChapterModal); });
+    document.getElementById('addChapterForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Chapter created successfully!');
+      closeModal(addChapterModal);
+    });
+
+    // ===== RENDER COURSE CARDS =====
+    function renderCourseCards(courses) {
+      coursesGrid.innerHTML = courses.map(c =>
+        '<div class="admin-card course-card-item" data-course="' + c.name.replace(/"/g, '&quot;') + '">' +
+          '<div class="admin-card-image">' +
+            '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy">' +
+          '</div>' +
+          '<div class="admin-card-body">' +
+            '<h3 class="admin-card-title">' + c.name + '</h3>' +
+            '<p class="admin-card-author">' + getChapters(c.name).length + ' Chapters</p>' +
+          '</div>' +
+        '</div>'
+      ).join('');
+
+      // Attach click handlers to course cards
+      coursesGrid.querySelectorAll('.course-card-item').forEach(card => {
+        card.addEventListener('click', () => {
+          const cName = card.dataset.course;
+          showCourseDetail(cName);
+        });
+      });
+    }
+
+    // ===== SHOW ALL COURSES (from sidebar Courses click) =====
+    function showAllCourses() {
+      let allCourses = [];
+      Object.keys(categoryCourses).forEach(cat => {
+        categoryCourses[cat].forEach(c => allCourses.push(c));
+      });
+
+      coursesTitle.textContent = 'Courses';
+      courseCount.textContent = allCourses.length + ' of ' + allCourses.length;
+      renderCourseCards(allCourses);
+
+      categoriesTopbar.style.display = 'none';
+      categoriesGrid.style.display = 'none';
+      courseDetailView.style.display = 'none';
+      if (reportsView) reportsView.style.display = 'none';
+      if (teachersView) teachersView.style.display = 'none';
+      coursesView.style.display = 'block';
+      backBtn.style.display = 'none';
+
+      lastCoursesState = 'all';
+      setSidebarActive('courses');
+      document.getElementById('classFilter').value = '';
+    }
+
+    // ===== SHOW COURSES FOR A CATEGORY =====
+    function showCourses(categoryName) {
+      const courses = categoryCourses[categoryName] || [];
+
+      coursesTitle.textContent = 'Courses - ' + categoryName;
+      courseCount.textContent = courses.length;
+      renderCourseCards(courses);
+
+      categoriesTopbar.style.display = 'none';
+      categoriesGrid.style.display = 'none';
+      courseDetailView.style.display = 'none';
+      if (reportsView) reportsView.style.display = 'none';
+      if (teachersView) teachersView.style.display = 'none';
+      coursesView.style.display = 'block';
+      backBtn.style.display = 'inline-flex';
+
+      lastCoursesState = categoryName;
+      setSidebarActive('courses');
+      document.getElementById('classFilter').value = '';
+    }
+
+    function showCategories() {
+      coursesView.style.display = 'none';
+      courseDetailView.style.display = 'none';
+      if (reportsView) reportsView.style.display = 'none';
+      if (teachersView) teachersView.style.display = 'none';
+      categoriesTopbar.style.display = 'flex';
+      categoriesGrid.style.display = 'grid';
+
+      setSidebarActive('categories');
+    }
+
+    // Category card click handlers
+    document.querySelectorAll('#categoriesGrid .admin-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const catName = card.querySelector('.admin-card-title').textContent;
+        showCourses(catName);
+      });
+    });
+
+    // Back to categories
+    backBtn.addEventListener('click', showCategories);
+
+    // ===== REPORTS VIEW =====
+    const reportsView = document.getElementById('reportsView');
+    const reportDetailPanel = document.getElementById('reportDetailPanel');
+    const reportMainPanel = document.getElementById('reportMainPanel');
+
+    const teachersData = [
+      { name: 'Rishabh ku padhi', hours: 80 },
+      { name: 'Dakshit Shaji', hours: 80 },
+      { name: 'D. Jagadish', hours: 80 },
+      { name: 'D. Jagadish', hours: 80 },
+      { name: 'Ayush Sharma', hours: 72 },
+      { name: 'Priya Patel', hours: 65 },
+      { name: 'Ankit Raj', hours: 60 },
+      { name: 'Meera Das', hours: 55 },
+      { name: 'Sunita Mishra', hours: 48 },
+      { name: 'Bikash Nayak', hours: 45 },
+      { name: 'Ravi Kumar', hours: 40 },
+      { name: 'Deepak Singh', hours: 38 },
+      { name: 'Sneha Mohapatra', hours: 35 },
+      { name: 'Arun Pradhan', hours: 30 },
+      { name: 'Kavita Sahu', hours: 28 }
+    ];
+
+    // Dummy detail data per teacher (attendance records)
+    const teacherDetailData = {};
+    teachersData.forEach(t => {
+      const records = [];
+      const numRecords = 10 + Math.floor(Math.random() * 10);
+      for (let d = 1; d <= numRecords; d++) {
+        const day = d < 10 ? '0' + d : '' + d;
+        records.push({ date: d + ' Feb 2026', hours: 1 + Math.floor(Math.random() * 7) });
+      }
+      teacherDetailData[t.name] = records;
+    });
+
+    const avatarColors = ['purple', 'blue', 'green', 'orange', 'red'];
+    const reportPerPage = 10;
+    let reportCurrentPage = 1;
+    let reportSortOrder = 'desc'; // 'asc' or 'desc'
+
+    function getSortedTeachers() {
+      const sorted = [...teachersData];
+      sorted.sort((a, b) => reportSortOrder === 'asc' ? a.hours - b.hours : b.hours - a.hours);
+      return sorted;
+    }
+
+    function renderReportTable() {
+      const sorted = getSortedTeachers();
+      const start = (reportCurrentPage - 1) * reportPerPage;
+      const end = Math.min(start + reportPerPage, sorted.length);
+      const pageData = sorted.slice(start, end);
+      const totalPages = Math.ceil(sorted.length / reportPerPage);
+
+      const tbody = document.getElementById('reportTableBody');
+      tbody.innerHTML = pageData.map((t, i) => {
+        const colorClass = avatarColors[(start + i) % avatarColors.length];
+        const initial = t.name.charAt(0).toUpperCase();
+        return '<tr class="report-tr" data-teacher="' + t.name.replace(/"/g, '&quot;') + '">' +
+          '<td class="report-td"><div class="report-teacher-cell">' +
+            '<div class="report-teacher-avatar report-teacher-avatar-' + colorClass + '">' + initial + '</div>' +
+            '<span class="report-teacher-name">' + t.name + '</span>' +
+          '</div></td>' +
+          '<td class="report-td"><span class="report-hours">' + t.hours + ' hrs</span></td>' +
+          '<td class="report-td report-td-action">' +
+            '<button class="report-eye-btn" title="View Details">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' +
+              '</svg>' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+
+      // Update title
+      document.getElementById('reportTableTitle').textContent =
+        'Attendance Data for 2026-02-06 - Page ' + reportCurrentPage + ' of ' + totalPages;
+
+      // Update pagination info
+      document.getElementById('reportPaginationInfo').textContent =
+        'Showing ' + (start + 1) + ' to ' + end + ' of ' + sorted.length + ' entries';
+
+      // Render page numbers
+      const pageNumsEl = document.getElementById('reportPageNumbers');
+      let pageNums = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pageNums += '<button class="report-page-num' + (p === reportCurrentPage ? ' active' : '') + '" data-page="' + p + '">' + p + '</button>';
+      }
+      pageNumsEl.innerHTML = pageNums;
+
+      // Enable/disable prev/next
+      document.getElementById('reportPrevBtn').disabled = reportCurrentPage === 1;
+      document.getElementById('reportNextBtn').disabled = reportCurrentPage === totalPages;
+
+      // Update sort icon state
+      const sortBtn = document.getElementById('reportSortHours');
+      const upArrow = sortBtn.querySelectorAll('polyline')[1]; // up arrow
+      const downArrow = sortBtn.querySelectorAll('polyline')[0]; // down arrow
+      if (reportSortOrder === 'asc') {
+        upArrow.style.opacity = '1';
+        downArrow.style.opacity = '0.3';
+      } else {
+        upArrow.style.opacity = '0.3';
+        downArrow.style.opacity = '1';
+      }
+    }
+
+    // Sorting
+    document.getElementById('reportSortHours').addEventListener('click', () => {
+      reportSortOrder = reportSortOrder === 'desc' ? 'asc' : 'desc';
+      reportCurrentPage = 1;
+      renderReportTable();
+    });
+
+    document.getElementById('reportPrevBtn').addEventListener('click', () => {
+      if (reportCurrentPage > 1) { reportCurrentPage--; renderReportTable(); }
+    });
+    document.getElementById('reportNextBtn').addEventListener('click', () => {
+      const totalPages = Math.ceil(teachersData.length / reportPerPage);
+      if (reportCurrentPage < totalPages) { reportCurrentPage++; renderReportTable(); }
+    });
+    document.getElementById('reportPageNumbers').addEventListener('click', (e) => {
+      const btn = e.target.closest('.report-page-num');
+      if (btn) {
+        reportCurrentPage = parseInt(btn.dataset.page);
+        renderReportTable();
+      }
+    });
+
+    // Eye icon click - show detail panel
+    document.getElementById('reportTableBody').addEventListener('click', (e) => {
+      const eyeBtn = e.target.closest('.report-eye-btn');
+      if (!eyeBtn) return;
+      const row = eyeBtn.closest('.report-tr');
+      const teacherName = row.dataset.teacher;
+      openTeacherDetail(teacherName);
+    });
+
+    // ===== TEACHER DETAIL PANEL =====
+    let detailCurrentPage = 1;
+    const detailPerPage = 5;
+    let currentDetailTeacher = '';
+
+    function openTeacherDetail(teacherName) {
+      currentDetailTeacher = teacherName;
+      detailCurrentPage = 1;
+      document.getElementById('detailTeacherName').textContent = teacherName;
+
+      const records = teacherDetailData[teacherName] || [];
+      const totalHours = records.reduce((s, r) => s + r.hours, 0);
+      document.getElementById('detailOverallPeriod').textContent = records.length;
+      document.getElementById('detailOverallHours').textContent = totalHours;
+
+      renderDetailTable();
+      reportDetailPanel.classList.add('open');
+      document.querySelector('.report-layout').classList.add('detail-open');
+    }
+
+    function closeTeacherDetail() {
+      reportDetailPanel.classList.remove('open');
+      document.querySelector('.report-layout').classList.remove('detail-open');
+    }
+
+    document.getElementById('reportDetailClose').addEventListener('click', closeTeacherDetail);
+
+    function renderDetailTable() {
+      const records = teacherDetailData[currentDetailTeacher] || [];
+      const start = (detailCurrentPage - 1) * detailPerPage;
+      const end = Math.min(start + detailPerPage, records.length);
+      const pageData = records.slice(start, end);
+      const totalPages = Math.ceil(records.length / detailPerPage);
+
+      document.getElementById('detailTableBody').innerHTML = pageData.map(r =>
+        '<tr class="report-detail-tr"><td class="report-detail-td">' + r.date + '</td><td class="report-detail-td">' + r.hours + ' hrs</td></tr>'
+      ).join('');
+
+      document.getElementById('detailPaginationInfo').textContent =
+        'Showing ' + (start + 1) + ' to ' + end + ' of ' + records.length + ' entries';
+
+      const pageNumsEl = document.getElementById('detailPageNumbers');
+      let pn = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pn += '<button class="report-page-num' + (p === detailCurrentPage ? ' active' : '') + '" data-page="' + p + '">' + p + '</button>';
+      }
+      pageNumsEl.innerHTML = pn;
+
+      document.getElementById('detailPrevBtn').disabled = detailCurrentPage === 1;
+      document.getElementById('detailNextBtn').disabled = detailCurrentPage === totalPages;
+    }
+
+    document.getElementById('detailPrevBtn').addEventListener('click', () => {
+      if (detailCurrentPage > 1) { detailCurrentPage--; renderDetailTable(); }
+    });
+    document.getElementById('detailNextBtn').addEventListener('click', () => {
+      const records = teacherDetailData[currentDetailTeacher] || [];
+      const totalPages = Math.ceil(records.length / detailPerPage);
+      if (detailCurrentPage < totalPages) { detailCurrentPage++; renderDetailTable(); }
+    });
+    document.getElementById('detailPageNumbers').addEventListener('click', (e) => {
+      const btn = e.target.closest('.report-page-num');
+      if (btn) {
+        detailCurrentPage = parseInt(btn.dataset.page);
+        renderDetailTable();
+      }
+    });
+
+    // Export button
+    document.getElementById('reportExportBtn').addEventListener('click', () => {
+      let csv = 'Teacher,Total Hours\n';
+      teachersData.forEach(t => { csv += '"' + t.name + '",' + t.hours + '\n'; });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'teacher_report.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    function showReports() {
+      categoriesTopbar.style.display = 'none';
+      categoriesGrid.style.display = 'none';
+      coursesView.style.display = 'none';
+      courseDetailView.style.display = 'none';
+      reportsView.style.display = 'flex';
+      setSidebarActive('reports');
+      reportCurrentPage = 1;
+      reportSortOrder = 'desc';
+      closeTeacherDetail();
+      renderReportTable();
+    }
+
+    function hideReports() {
+      reportsView.style.display = 'none';
+    }
+
+    // ===== TEACHERS VIEW =====
+    const teachersView = document.getElementById('teachersView');
+
+    const teacherListData = [
+      { name: 'Rishabh ku padhi', phone: '9438521076', email: 'rishabh.padhi@gmail.com' },
+      { name: 'Dakshit Shaji', phone: '9337842156', email: 'dakshit.shaji@outlook.com' },
+      { name: 'D. Jagadish', phone: '9556123498', email: 'jagadish.d@yahoo.com' },
+      { name: 'Ramesh Behera', phone: '9876234510', email: 'ramesh.behera@gmail.com' },
+      { name: 'Ayush Sharma', phone: '9812345670', email: 'ayush.sharma@davschool.in' },
+      { name: 'Priya Patel', phone: '9723456189', email: 'priya.patel@carmelschool.in' },
+      { name: 'Ankit Raj', phone: '9634521870', email: 'ankit.raj@kvschool.in' },
+      { name: 'Meera Das', phone: '9512347680', email: 'meera.das@govtschool.in' },
+      { name: 'Sunita Mishra', phone: '8976543210', email: 'sunita.mishra@stxaviers.in' },
+      { name: 'Bikash Nayak', phone: '8865432198', email: 'bikash.nayak@davschool.in' },
+      { name: 'Ravi Kumar', phone: '7896541230', email: 'ravi.kumar@carmelschool.in' },
+      { name: 'Deepak Singh', phone: '7765432109', email: 'deepak.singh@kvschool.in' },
+      { name: 'Sneha Mohapatra', phone: '9998765432', email: 'sneha.m@govtschool.in' },
+      { name: 'Arun Pradhan', phone: '8812345670', email: 'arun.pradhan@stxaviers.in' },
+      { name: 'Kavita Sahu', phone: '7712345698', email: 'kavita.sahu@davschool.in' }
+    ];
+
+    const teacherPerPage = 10;
+    let teacherCurrentPage = 1;
+
+    function renderTeacherTable() {
+      const start = (teacherCurrentPage - 1) * teacherPerPage;
+      const end = Math.min(start + teacherPerPage, teacherListData.length);
+      const pageData = teacherListData.slice(start, end);
+      const totalPages = Math.ceil(teacherListData.length / teacherPerPage);
+
+      const tbody = document.getElementById('teacherTableBody');
+      tbody.innerHTML = pageData.map((t, i) => {
+        const colorClass = avatarColors[(start + i) % avatarColors.length];
+        const initial = t.name.charAt(0).toUpperCase();
+        const dn = t.name.replace(/"/g, '&quot;');
+        return '<tr class="report-tr teacher-row" data-teacher-name="' + dn + '" data-teacher-phone="' + t.phone + '" data-teacher-email="' + t.email + '">' +
+          '<td class="report-td"><div class="report-teacher-cell">' +
+            '<div class="report-teacher-avatar report-teacher-avatar-' + colorClass + '">' + initial + '</div>' +
+            '<span class="report-teacher-name">' + t.name + '</span>' +
+          '</div></td>' +
+          '<td class="report-td">' + t.phone + '</td>' +
+          '<td class="report-td">' + t.email + '</td>' +
+          '<td class="report-td report-td-action">' +
+            '<div class="teacher-actions">' +
+              '<button class="teacher-action-btn ta-transfer" title="Transfer">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>' +
+              '</button>' +
+              '<button class="teacher-action-btn ta-update" title="Update">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+              '</button>' +
+              '<button class="teacher-action-btn ta-delete" title="Delete">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+              '</button>' +
+              '<button class="teacher-action-btn ta-password" title="Reset Password">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' +
+              '</button>' +
+            '</div>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+
+      document.getElementById('teacherTableTitle').textContent =
+        'Attendance Data for 2026-02-06 - Page ' + teacherCurrentPage + ' of ' + totalPages;
+
+      document.getElementById('teacherPaginationInfo').textContent =
+        'Showing ' + (start + 1) + ' to ' + end + ' of ' + teacherListData.length + ' entries';
+
+      const pageNumsEl = document.getElementById('teacherPageNumbers');
+      let pageNums = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pageNums += '<button class="report-page-num' + (p === teacherCurrentPage ? ' active' : '') + '" data-page="' + p + '">' + p + '</button>';
+      }
+      pageNumsEl.innerHTML = pageNums;
+
+      document.getElementById('teacherPrevBtn').disabled = teacherCurrentPage === 1;
+      document.getElementById('teacherNextBtn').disabled = teacherCurrentPage === totalPages;
+    }
+
+    document.getElementById('teacherPrevBtn').addEventListener('click', () => {
+      if (teacherCurrentPage > 1) { teacherCurrentPage--; renderTeacherTable(); }
+    });
+    document.getElementById('teacherNextBtn').addEventListener('click', () => {
+      const totalPages = Math.ceil(teacherListData.length / teacherPerPage);
+      if (teacherCurrentPage < totalPages) { teacherCurrentPage++; renderTeacherTable(); }
+    });
+    document.getElementById('teacherPageNumbers').addEventListener('click', (e) => {
+      const btn = e.target.closest('.report-page-num');
+      if (btn) {
+        teacherCurrentPage = parseInt(btn.dataset.page);
+        renderTeacherTable();
+      }
+    });
+
+    // ===== TEACHER ACTION BUTTONS =====
+    const transferModal = document.getElementById('transferTeacherModal');
+    const updateModal = document.getElementById('updateTeacherModal');
+    const passwordModal = document.getElementById('passwordResetModal');
+
+    document.getElementById('teacherTableBody').addEventListener('click', (e) => {
+      const btn = e.target.closest('.teacher-action-btn');
+      if (!btn) return;
+      const row = btn.closest('.teacher-row');
+      const tName = row.dataset.teacherName;
+      const tPhone = row.dataset.teacherPhone;
+      const tEmail = row.dataset.teacherEmail;
+
+      // Transfer
+      if (btn.classList.contains('ta-transfer')) {
+        document.getElementById('transferTeacherName').value = tName;
+        document.getElementById('transferDate').value = new Date().toISOString().split('T')[0];
+        openModal(transferModal);
+      }
+
+      // Update
+      if (btn.classList.contains('ta-update')) {
+        document.getElementById('updateTeacherName').value = tName;
+        document.getElementById('updateTeacherPhone').value = tPhone;
+        document.getElementById('updateTeacherEmail').value = tEmail;
+        openModal(updateModal);
+      }
+
+      // Delete
+      if (btn.classList.contains('ta-delete')) {
+        if (confirm('Are you sure you want to delete "' + tName + '"? This action cannot be undone.')) {
+          row.remove();
+        }
+      }
+
+      // Password Reset
+      if (btn.classList.contains('ta-password')) {
+        document.getElementById('resetTeacherName').value = tName;
+        openModal(passwordModal);
+      }
+    });
+
+    // Transfer modal handlers
+    document.getElementById('transferTeacherClose').addEventListener('click', () => closeModal(transferModal));
+    document.getElementById('transferTeacherCancel').addEventListener('click', () => closeModal(transferModal));
+    transferModal.addEventListener('click', (e) => { if (e.target === transferModal) closeModal(transferModal); });
+    document.getElementById('transferTeacherForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Teacher transferred successfully!');
+      closeModal(transferModal);
+    });
+
+    // Update modal handlers
+    document.getElementById('updateTeacherClose').addEventListener('click', () => closeModal(updateModal));
+    document.getElementById('updateTeacherCancel').addEventListener('click', () => closeModal(updateModal));
+    updateModal.addEventListener('click', (e) => { if (e.target === updateModal) closeModal(updateModal); });
+    document.getElementById('updateTeacherForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Teacher details updated successfully!');
+      closeModal(updateModal);
+    });
+
+    // Password Reset modal handlers
+    document.getElementById('passwordResetClose').addEventListener('click', () => closeModal(passwordModal));
+    document.getElementById('passwordResetCancel').addEventListener('click', () => closeModal(passwordModal));
+    passwordModal.addEventListener('click', (e) => { if (e.target === passwordModal) closeModal(passwordModal); });
+    document.getElementById('passwordResetForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newPass = document.getElementById('resetNewPassword').value;
+      const confirmPass = document.getElementById('resetConfirmPassword').value;
+      if (newPass !== confirmPass) {
+        alert('Passwords do not match!');
+        return;
+      }
+      alert('Password reset successfully!');
+      closeModal(passwordModal);
+    });
+
+    function showTeachers() {
+      categoriesTopbar.style.display = 'none';
+      categoriesGrid.style.display = 'none';
+      coursesView.style.display = 'none';
+      courseDetailView.style.display = 'none';
+      reportsView.style.display = 'none';
+      teachersView.style.display = 'flex';
+      setSidebarActive('teachers');
+      teacherCurrentPage = 1;
+      renderTeacherTable();
+    }
+
+    function hideTeachers() {
+      teachersView.style.display = 'none';
+    }
+
+    // Hide all views helper
+    function hideAllViews() {
+      hideReports();
+      hideTeachers();
+    }
+
+    // Sidebar nav active state
+    document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        if (item.dataset.section === 'categories') { hideAllViews(); showCategories(); }
+        if (item.dataset.section === 'courses') { hideAllViews(); showAllCourses(); }
+        if (item.dataset.section === 'reports') { hideTeachers(); showReports(); }
+        if (item.dataset.section === 'teachers') showTeachers();
+      });
+    });
+
+    // Add Category Modal
+    const addCatModal = document.getElementById('addCatModal');
+
+    document.getElementById('addCategoryBtn').addEventListener('click', () => {
+      addCatModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeAddCat() {
+      addCatModal.classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('addCatForm').reset();
+    }
+
+    document.getElementById('addCatClose').addEventListener('click', closeAddCat);
+    document.getElementById('addCatCancel').addEventListener('click', closeAddCat);
+    addCatModal.addEventListener('click', (e) => {
+      if (e.target === addCatModal) closeAddCat();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && addCatModal.classList.contains('active')) closeAddCat();
+    });
+
+    // Upload area click
+    document.getElementById('catUploadArea').addEventListener('click', () => {
+      document.getElementById('catImage').click();
+    });
+
+    document.getElementById('addCatForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Category created successfully!');
+      closeAddCat();
+    });
+
+    // Add Course Modal
+    const addCourseModal = document.getElementById('addCourseModal');
+
+    document.getElementById('addCourseBtn').addEventListener('click', () => {
+      addCourseModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeAddCourse() {
+      addCourseModal.classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('addCourseForm').reset();
+    }
+
+    document.getElementById('addCourseClose').addEventListener('click', closeAddCourse);
+    document.getElementById('addCourseCancel').addEventListener('click', closeAddCourse);
+    addCourseModal.addEventListener('click', (e) => {
+      if (e.target === addCourseModal) closeAddCourse();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && addCourseModal.classList.contains('active')) closeAddCourse();
+    });
+
+    document.getElementById('courseUploadArea').addEventListener('click', () => {
+      document.getElementById('courseImage').click();
+    });
+
+    document.getElementById('addCourseForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Course created successfully!');
+      closeAddCourse();
+    });
+  </script>
+
+</body>
+</html>
