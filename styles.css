@@ -63,7 +63,7 @@ button {
 
 /* ===== NAVBAR ===== */
 .navbar {
-  background: var(--green-primary);
+  background: #2ab573;
   padding: 0 120px;
   height: 72px;
   display: flex;
