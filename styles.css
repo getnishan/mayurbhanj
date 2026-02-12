@@ -273,7 +273,7 @@ button {
 
 .hero-visual {
   flex: 1;
-  max-width: 450px;
+  max-width: 560px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -282,12 +282,14 @@ button {
 .hero-map {
   width: 100%;
   position: relative;
+  background: transparent;
 }
 
-.india-map-svg {
+.hero-map-img {
   width: 100%;
-  height: auto;
-  animation: float 8s ease-in-out infinite;
+  min-height: 380px;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
 /* ===== STATS BAR ===== */
