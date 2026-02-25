@@ -257,15 +257,15 @@
       <p class="modal-subtitle">Select how you want to access <strong id="modalCourseName"></strong></p>
 
       <div class="modal-options">
-        <!-- Login as School -->
-        <button class="modal-option" id="loginSchool">
+        <!-- Login as Teacher -->
+        <button class="modal-option" id="loginTeacher">
           <div class="modal-option-icon modal-option-icon-school">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/>
             </svg>
           </div>
-          <span class="modal-option-title">Login as School</span>
+          <span class="modal-option-title">Login as Teacher</span>
           <span class="modal-option-desc">Access full course content and management tools</span>
         </button>
 
@@ -280,6 +280,30 @@
           <span class="modal-option-title">Login as Student</span>
           <span class="modal-option-desc">Browse and explore course content</span>
         </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="teacherLoginModal">
+    <div class="modal teacher-login-modal">
+      <button class="modal-close" id="teacherModalClose" aria-label="Close teacher login modal">&times;</button>
+      <h2 class="modal-heading">Teacher Login</h2>
+      <p class="modal-subtitle">Enter School ID and password to continue.</p>
+
+      <div class="teacher-step">
+        <div class="teacher-field">
+          <label class="teacher-label" for="schoolIdField">School ID</label>
+          <input class="teacher-input" id="schoolIdField" type="text" placeholder="Enter school ID" autocomplete="username">
+        </div>
+        <div class="teacher-field">
+          <label class="teacher-label" for="schoolPasswordField">Password</label>
+          <input class="teacher-input" id="schoolPasswordField" type="password" placeholder="Enter password" autocomplete="current-password">
+        </div>
+        <div class="teacher-actions">
+          <button class="teacher-back-btn" id="teacherBackBtn" type="button">Back</button>
+          <button class="teacher-continue-btn" id="teacherContinueBtn" type="button">Continue</button>
+        </div>
       </div>
     </div>
   </div>
@@ -323,6 +347,25 @@
     const modal = document.getElementById('loginModal');
     const modalCourseName = document.getElementById('modalCourseName');
     const modalClose = document.getElementById('modalClose');
+    const teacherLoginModal = document.getElementById('teacherLoginModal');
+    const teacherModalClose = document.getElementById('teacherModalClose');
+    const schoolIdField = document.getElementById('schoolIdField');
+    const schoolPasswordField = document.getElementById('schoolPasswordField');
+    const teacherBackBtn = document.getElementById('teacherBackBtn');
+    const teacherContinueBtn = document.getElementById('teacherContinueBtn');
+
+    let selectedCourseName = '';
+
+    function resetTeacherForm() {
+      schoolIdField.value = '';
+      schoolPasswordField.value = '';
+    }
+
+    function showSchoolCredentialsStep() {
+      modal.classList.remove('active');
+      teacherLoginModal.classList.add('active');
+      schoolIdField.focus();
+    }
 
     // Open modal on course card click
     document.querySelectorAll('.course-card').forEach(card => {
@@ -330,6 +373,7 @@
         const titleEl = card.querySelector('.course-title');
         // Extract text without the SVG icon text
         const courseName = titleEl.textContent.trim();
+        selectedCourseName = courseName;
         modalCourseName.textContent = courseName;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -347,22 +391,59 @@
 
     function closeModal() {
       modal.classList.remove('active');
+      teacherLoginModal.classList.remove('active');
       document.body.style.overflow = '';
+      resetTeacherForm();
     }
 
     // Login option handlers
-    document.getElementById('loginSchool').addEventListener('click', () => {
-      closeModal();
-      const courseName = modalCourseName.textContent.trim();
-      localStorage.setItem('courseName', courseName);
-      window.location.href = 'choose-teacher.html?course=' + encodeURIComponent(courseName);
+    document.getElementById('loginTeacher').addEventListener('click', () => {
+      showSchoolCredentialsStep();
     });
 
     document.getElementById('loginGuest').addEventListener('click', () => {
       closeModal();
-      const courseName = modalCourseName.textContent.trim();
+      const courseName = selectedCourseName || modalCourseName.textContent.trim();
       localStorage.setItem('courseName', courseName);
       window.location.href = 'course-content.html?course=' + encodeURIComponent(courseName) + '&role=student';
+    });
+
+    teacherModalClose.addEventListener('click', closeModal);
+    teacherLoginModal.addEventListener('click', (e) => {
+      if (e.target === teacherLoginModal) closeModal();
+    });
+
+    teacherBackBtn.addEventListener('click', () => {
+      teacherLoginModal.classList.remove('active');
+      modal.classList.add('active');
+      resetTeacherForm();
+    });
+
+    teacherContinueBtn.addEventListener('click', () => {
+      const schoolId = schoolIdField.value.trim();
+      const schoolPassword = schoolPasswordField.value.trim();
+      if (!schoolId || !schoolPassword) {
+        alert('Please enter School ID and password.');
+        if (!schoolId) {
+          schoolIdField.focus();
+        } else {
+          schoolPasswordField.focus();
+        }
+        return;
+      }
+
+      const courseName = selectedCourseName || modalCourseName.textContent.trim();
+      localStorage.setItem('courseName', courseName);
+      localStorage.setItem('schoolId', schoolId);
+      closeModal();
+      window.location.href = 'choose-teacher.html?course=' + encodeURIComponent(courseName) + '&role=school&schoolId=' + encodeURIComponent(schoolId);
+    });
+
+    teacherLoginModal.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        teacherContinueBtn.click();
+      }
     });
   </script>
 
