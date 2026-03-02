@@ -2,8 +2,9 @@
 .dashboard-hero {
   padding: 56px 48px 48px;
   position: relative;
-  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-    url('assets/dashboard-hero-careers.png?v=1') center center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('assets/dashboard-hero-careers.png?v=1') center 22%/cover no-repeat;
+  background-color: #0f172a;
   overflow: hidden;
 }
 
